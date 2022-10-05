@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true
+  },
+  "include": [
+    "**/*.ts",
+    ".eslintrc.cjs",
+    "prepublish.js"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**/*",
+    "**/.configs/**",
+    "**/docs/**"
+  ]
+}
