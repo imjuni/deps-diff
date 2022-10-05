@@ -1,6 +1,6 @@
 {
   "name": "deps-diff",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Dependency difference create using by json or markdown format",
   "scripts": {
     "dev": "cross-env TS_NODE_PROJECT=tsconfig.json node -r ts-node/register ./lib/cli.ts",
@@ -37,6 +37,9 @@
       "./dist/cjs/cjs.js"
     ]
   },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "deps-diff": "./dist/cli.js",
     "deps-pipe-md": "./dist/pipe-md.js"
@@ -89,6 +92,7 @@
   },
   "dependencies": {
     "fast-safe-stringify": "^2.1.1",
+    "find-up": "^5.0.0",
     "jsonc-parser": "^3.2.0",
     "my-easy-fp": "^0.16.0",
     "my-node-fp": "^0.8.1",

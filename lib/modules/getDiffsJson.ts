@@ -1,22 +1,23 @@
-import IOption from '@cli/interfaces/IOption';
+import IBaseOption from '@configs/interfaces/IBaseOption';
+import IJsonOption from '@configs/interfaces/IJsonOption';
+import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
 import IPackageJson from '@configs/interfaces/IPackageJson';
+import TOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
 import getDiff from '@modules/getDiff';
-import getParsePackageJson from '@modules/getParsePackageJson';
+import getNextPackageJson from '@modules/getNextPackageJson';
+import getPrevPackageJson from '@modules/getPrevPackageJson';
 import IDiff from '@modules/interfaces/IDiff';
-import fs from 'fs';
 import { exists, isDescendant } from 'my-node-fp';
 import { cpus } from 'os';
-import path from 'path';
 import * as simpleGit from 'simple-git';
 import { LastArrayElement } from 'type-fest';
-import { ArgumentsCamelCase } from 'yargs';
 
 type TDependencies = keyof Pick<
   IPackageJson,
   'dependencies' | 'devDependencies' | 'peerDependencies'
 >;
 
-type TDependencyMap = Record<LastArrayElement<IOption['dependency']>, TDependencies>;
+type TDependencyMap = Record<LastArrayElement<IBaseOption['dependency']>, TDependencies>;
 
 const dependencyMap: TDependencyMap = {
   dev: 'devDependencies',
@@ -24,81 +25,36 @@ const dependencyMap: TDependencyMap = {
   peer: 'peerDependencies',
 };
 
-function getGitBaseDir(argv: ArgumentsCamelCase<IOption>): string {
-  const gitBasedir = argv.gitBasedir ?? argv.project;
-  return path.isAbsolute(gitBasedir) ? path.resolve(gitBasedir) : gitBasedir;
-}
-
-export default async function getDiffsJson(argv: ArgumentsCamelCase<IOption>) {
+export default async function getDiffsJson<T extends IJsonOption | IMarkdownOption>(
+  option: TOptionWithAbsolutePath<T>,
+) {
   try {
-    const project = path.isAbsolute(argv.project) ? path.resolve(argv.project) : argv.project;
-    const gitBaseDir = getGitBaseDir(argv);
-
-    if ((await exists(project)) === false) {
-      console.error(`Cannot found project directory: ${project}`);
+    if ((await exists(option.absolute.project)) === false) {
+      console.error(`Cannot found project directory: ${option.absolute.project}`);
     }
 
-    if (gitBaseDir !== project && isDescendant(gitBaseDir, project) === false) {
+    if (
+      option.absolute.gitBaseDir !== option.absolute.project &&
+      isDescendant(option.absolute.gitBaseDir, option.absolute.project) === false
+    ) {
       console.error(
-        `Project directory have to descendant of git-basedir:${gitBaseDir} > ${project}`,
+        `Project directory have to descendant of git-basedir:${option.absolute.gitBaseDir} > ${option.absolute.project}`,
       );
     }
 
-    const packageJsonFileName = 'package.json';
-    const packageJsonFilePath = path.resolve(path.join(project, packageJsonFileName));
-
-    if ((await exists(packageJsonFilePath)) === false) {
-      console.error(`Cannot found package.json file: ${packageJsonFilePath}`);
-    }
-
     const options: Partial<simpleGit.SimpleGitOptions> = {
-      baseDir: gitBaseDir,
-      binary: argv.gitBinary,
+      baseDir: option.absolute.gitBaseDir,
+      binary: option.gitBinary,
       maxConcurrentProcesses: cpus().length,
       trimmed: false,
     };
 
-    const packageJson = getParsePackageJson<IPackageJson>(
-      (await fs.promises.readFile(packageJsonFilePath)).toString(),
-    );
-
-    if (packageJson.type === 'fail') {
-      console.error(`${packageJsonFilePath}: invalid json format`);
-      process.exit(1);
-    }
-
     const git = simpleGit.default(options);
 
-    const hash = await (async () => {
-      if (argv.hash == null) {
-        const gitlogs = await git.log({ maxCount: 5 });
+    const packageJson = await getNextPackageJson({ option, git });
+    const prevPackageJson = await getPrevPackageJson({ option, git });
 
-        if (gitlogs.latest == null) {
-          if (argv.hash == null) {
-            console.error('Cannot found latest commit');
-            process.exit(1);
-          }
-
-          console.error(`Cannot found ${argv.hash} commit`);
-          process.exit(1);
-        }
-
-        return gitlogs.latest.hash;
-      }
-
-      return argv.hash;
-    })();
-
-    const prevPackageJson = getParsePackageJson<IPackageJson>(
-      await git.show(`${hash}:${path.join(project.replace(gitBaseDir, ''), packageJsonFileName)}`),
-    );
-
-    if (prevPackageJson.type === 'fail') {
-      console.error(`${packageJsonFilePath}: invalid json format`);
-      process.exit(1);
-    }
-
-    const dependencies = argv.dependency.reduce<{ dev: IDiff[]; prod: IDiff[]; peer: IDiff[] }>(
+    const dependencies = option.dependency.reduce<{ dev: IDiff[]; prod: IDiff[]; peer: IDiff[] }>(
       (aggregation, dependency) => {
         const currentDependencies: Record<string, string> =
           packageJson.pass[dependencyMap[dependency]] ?? {};
@@ -122,13 +78,13 @@ export default async function getDiffsJson(argv: ArgumentsCamelCase<IOption>) {
 
     const filtered = {
       dev: dependencies.dev.filter(
-        (diff) => argv.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
+        (diff) => option.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
       ),
       prod: dependencies.prod.filter(
-        (diff) => argv.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
+        (diff) => option.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
       ),
       peer: dependencies.peer.filter(
-        (diff) => argv.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
+        (diff) => option.ignore.includes(`${diff.dependency}-${diff.action}`) === false,
       ),
     };
 

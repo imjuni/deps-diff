@@ -1,7 +1,7 @@
-import IOption from '@cli/interfaces/IOption';
+import IBaseOption from '@configs/interfaces/IBaseOption';
 import { Argv } from 'yargs';
 
-export default function builder(argv: Argv<IOption>): Argv<IOption> {
+export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
   argv
     .option('project', {
       alias: 'p',
@@ -41,8 +41,11 @@ export default function builder(argv: Argv<IOption>): Argv<IOption> {
       array: true,
       default: [],
     })
-    .option('hash', {
-      alias: 'h',
+    .option('prev-hash', {
+      description: 'git commit hash for comparison',
+      type: 'string',
+    })
+    .option('next-hash', {
       description: 'git commit hash for comparison',
       type: 'string',
     })

@@ -1,4 +1,4 @@
-export default interface IOption {
+export default interface IBaseOption {
   project: string;
   dependency: ('dev' | 'prod' | 'peer')[];
   ignore: (
@@ -13,9 +13,9 @@ export default interface IOption {
     | 'peer-change'
   )[];
   config?: string;
-  hash?: string;
+  prevHash?: string;
+  nextHash?: string;
   json: boolean;
-  depth: number;
   gitBinary: string;
   gitBasedir?: string;
 }

@@ -4,7 +4,7 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
-    "**/node_modules": false,
+    "**/node_modules": true,
     "**/.DS_Store": true,
     "**/build": true,
     "**/dist": false
@@ -26,8 +26,7 @@
   "files.eol": "\n",
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.associations": {
-    "**/.ctiignore": "jsonc",
-    ".ctirc": "jsonc"
+    ".depsdiffrc": "jsonc"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,

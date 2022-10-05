@@ -20,6 +20,14 @@
     },
     {
       "files": [
+        ".depsdiffrc"
+      ],
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": [
         ".vscode/launch.json",
         ".vscode/settings.json",
         "tsconfig.prod.json",
