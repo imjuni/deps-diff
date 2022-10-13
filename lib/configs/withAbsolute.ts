@@ -7,7 +7,7 @@ import path from 'path';
 export default function withAbsolutePath<T extends IJsonOption | IMarkdownOption>(
   option: T,
 ): IOptionWithAbsolutePath<T> {
-  const project = path.isAbsolute(option.project) ? path.resolve(option.project) : option.project;
+  const project = path.isAbsolute(option.project) ? option.project : path.resolve(option.project);
   const gitBaseDir = getGitBaseDir(option);
 
   return { ...option, absolute: { project, gitBaseDir, packageJsonFileName: 'package.json' } };

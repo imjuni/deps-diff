@@ -1,4 +1,5 @@
 import IBaseOption from '@configs/interfaces/IBaseOption';
+import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
 import { Argv } from 'yargs';
 
 export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
@@ -15,7 +16,7 @@ export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
       description: `configuration file path, if you not pass this option that will be use find '.depsrc' first`,
       type: 'string',
     })
-    .option('dependency', {
+    .option('dependencies', {
       alias: 'd',
       description: `array of dependency type: dev, prod, peer`,
       type: 'string',
@@ -42,12 +43,46 @@ export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
       default: [],
     })
     .option('prev-hash', {
-      description: 'git commit hash for comparison',
+      description: 'previous git commit hash for comparison',
       type: 'string',
     })
     .option('next-hash', {
-      description: 'git commit hash for comparison',
+      description: 'next git commit hash for comparison',
       type: 'string',
+    })
+    .option('title-list-type', {
+      description: 'list type of markdown document title',
+      type: 'string',
+      choices: [
+        LIST_SIGN.UNORDERED_TITLE,
+        LIST_SIGN.ORDERED,
+        LIST_SIGN.UNORDERED_ASTERISK,
+        LIST_SIGN.UNORDERED_MINUS,
+        LIST_SIGN.UNORDERED_PLUS,
+      ],
+      default: LIST_SIGN.UNORDERED_TITLE,
+    })
+    .option('deps-list-type', {
+      description: 'list type of markdown document dependency',
+      type: 'string',
+      choices: [
+        LIST_SIGN.ORDERED,
+        LIST_SIGN.UNORDERED_ASTERISK,
+        LIST_SIGN.UNORDERED_MINUS,
+        LIST_SIGN.UNORDERED_PLUS,
+      ],
+      default: LIST_SIGN.UNORDERED_MINUS,
+    })
+    .option('content-list-type', {
+      description: 'list type of markdown document content',
+      type: 'string',
+      choices: [
+        LIST_SIGN.ORDERED,
+        LIST_SIGN.UNORDERED_ASTERISK,
+        LIST_SIGN.UNORDERED_MINUS,
+        LIST_SIGN.UNORDERED_PLUS,
+      ],
+      default: LIST_SIGN.UNORDERED_MINUS,
     })
     .option('git-basedir', {
       description: 'git base directory',

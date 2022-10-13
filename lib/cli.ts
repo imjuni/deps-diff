@@ -38,7 +38,7 @@ const parser = yargs(process.argv.slice(2))
 
       const option = withAbsolutePath(argv);
       const diffs = await getDiffsJson(option);
-      const md = getMarkdown(diffs, argv.depth);
+      const md = getMarkdown(diffs, option);
 
       Printable.out({ action: 'data', data: md });
       Printable.out({ action: 'end', data: 'Compare complete!' });
@@ -51,5 +51,4 @@ const parser = yargs(process.argv.slice(2))
 
 (async () => {
   await parser.argv;
-  process.exit(0);
 })();
