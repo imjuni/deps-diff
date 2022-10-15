@@ -1,5 +1,5 @@
-import { DEPENDENCY } from '@configs/interfaces/DEPENDENCY';
-import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
+import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 import AbstractParser from '@modules/AbstractParser';
 import getMarkdown from '@modules/getMarkdown';
 import IChunk from '@modules/interfaces/IChunk';
@@ -11,27 +11,27 @@ export default class MarkdownParser extends AbstractParser {
 
   #depth: number;
 
-  #titleListSign: LIST_SIGN;
+  #titleListSign: TLIST_SIGN;
 
-  #contentListSign: LIST_SIGN;
+  #contentListSign: TLIST_SIGN;
 
-  #depsListSign: LIST_SIGN;
+  #depsListSign: TLIST_SIGN;
 
   constructor() {
     super();
 
     this.#ora = ora({ stream: process.stderr });
     this.#depth = 2;
-    this.#titleListSign = LIST_SIGN.UNORDERED_TITLE;
-    this.#contentListSign = LIST_SIGN.UNORDERED_MINUS;
-    this.#depsListSign = LIST_SIGN.UNORDERED_MINUS;
+    this.#titleListSign = TLIST_SIGN.UNORDERED_TITLE;
+    this.#contentListSign = TLIST_SIGN.UNORDERED_MINUS;
+    this.#depsListSign = TLIST_SIGN.UNORDERED_MINUS;
   }
 
   async finish(): Promise<void> {
     const rawJson = this.data.join('');
     const data: { dev: IDiff[]; prod: IDiff[]; peer: IDiff[] } = JSON.parse(rawJson);
     const md = getMarkdown(data, {
-      dependencies: [DEPENDENCY.DEV, DEPENDENCY.PROD, DEPENDENCY.PEER],
+      dependencies: [TDEPENDENCY.DEV, TDEPENDENCY.PROD, TDEPENDENCY.PEER],
       contentListType: this.#contentListSign,
       titleListType: this.#titleListSign,
       depsListType: this.#depsListSign,

@@ -1,3 +1,16 @@
+/**
+ * ignore specfic dependency with action
+ *
+ * - dev-add    devDependencies `add` action ignore
+ * - dev-remove devDependencies `remove` action ignore
+ * - dev-change devDependencies `change` action ignore
+ * - prod-add    dependencies `add` action ignore
+ * - prod-remove dependencies `remove` action ignore
+ * - prod-change dependencies `change` action ignore
+ * - peer-add    peerDependencies `add` action ignore
+ * - peer-remove peerDependencies `remove` action ignore
+ * - peer-change peerDependencies `change` action ignore
+ */
 export const TIGNORE_ACTION = {
   DEV_ADD: 'dev-add',
   DEV_REMOVE: 'dev-remove',

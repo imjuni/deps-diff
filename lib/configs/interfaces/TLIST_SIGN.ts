@@ -1,4 +1,4 @@
-export const LIST_SIGN = {
+export const TLIST_SIGN = {
   UNORDERED_TITLE: '#',
   UNORDERED_MINUS: 'm',
   UNORDERED_PLUS: '+',
@@ -7,4 +7,4 @@ export const LIST_SIGN = {
 } as const;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-redeclare
-export type LIST_SIGN = typeof LIST_SIGN[keyof typeof LIST_SIGN];
+export type TLIST_SIGN = typeof TLIST_SIGN[keyof typeof TLIST_SIGN];

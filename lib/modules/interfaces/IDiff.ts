@@ -1,3 +1,5 @@
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
+import { TACTION } from '@modules/interfaces/TACTION';
 import { ReleaseType } from 'semver';
 
 export default interface IDiff {
@@ -7,7 +9,7 @@ export default interface IDiff {
    * - change change dependencies version
    * - remove remove dependencies
    * */
-  action: 'add' | 'change' | 'remove';
+  action: TACTION;
 
   /**
    * dependency from
@@ -15,7 +17,7 @@ export default interface IDiff {
    * - prod from package.dependencies
    * - peer from package.peerDependencies
    */
-  dependency: 'dev' | 'prod' | 'peer';
+  dependency: TDEPENDENCY;
 
   /** package name */
   name: string;

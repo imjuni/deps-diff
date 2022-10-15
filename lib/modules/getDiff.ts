@@ -1,3 +1,4 @@
+import { TACTION } from '@modules/interfaces/TACTION';
 import IDiff from 'lib/modules/interfaces/IDiff';
 import { clean, coerce, diff as semverDiff, valid } from 'semver';
 
@@ -20,7 +21,7 @@ export default function getDiff({
     .map((dep) => {
       const diff: IDiff = {
         dependency: type,
-        action: 'add',
+        action: TACTION.ADD,
         name: dep.name,
         next: dep.version,
         prev: prev[dep.name] ?? 'N/A',
@@ -41,7 +42,7 @@ export default function getDiff({
     .map((dep) => {
       const diff: IDiff = {
         dependency: type,
-        action: 'remove',
+        action: TACTION.REMOVE,
         name: dep.name,
         prev: dep.version,
         next: next[dep.name] ?? 'N/A',
@@ -75,7 +76,7 @@ export default function getDiff({
     .map((dep) => {
       const diff: IDiff = {
         dependency: type,
-        action: 'change',
+        action: TACTION.CHANGE,
         name: dep.name,
         next: dep.version,
         prev: dep.prevVersion,

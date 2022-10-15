@@ -1,6 +1,6 @@
-import { DEPENDENCY } from '@configs/interfaces/DEPENDENCY';
-import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
 import { TIGNORE_ACTION } from '@configs/interfaces/TIGNORE_ACTION';
+import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 
 export default interface IBaseOption {
   /**
@@ -16,7 +16,7 @@ export default interface IBaseOption {
    * - prod dependencies
    * - peer peerDependencies
    */
-  dependencies: DEPENDENCY[];
+  dependencies: TDEPENDENCY[];
 
   /**
    * ignore specfic dependency with action
@@ -49,13 +49,13 @@ export default interface IBaseOption {
   nextHash?: string;
 
   /** list type of markdown document title */
-  titleListType: LIST_SIGN;
+  titleListType: TLIST_SIGN;
 
   /** list type of markdown document dependency */
-  depsListType: LIST_SIGN;
+  depsListType: TLIST_SIGN;
 
   /** list type of markdown document content */
-  contentListType: LIST_SIGN;
+  contentListType: TLIST_SIGN;
 
   /** git binary filename */
   gitBinary: string;

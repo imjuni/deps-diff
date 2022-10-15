@@ -1,6 +1,6 @@
-import { DEPENDENCY } from '@configs/interfaces/DEPENDENCY';
 import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
-import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
+import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 import TOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
 import getDiffsJson from '@modules/getDiffsJson';
 import { populate } from 'my-easy-fp';
@@ -19,20 +19,20 @@ function heading(depth: number) {
     .join('');
 }
 
-function getListSign(listSign: LIST_SIGN, depth?: number) {
-  if (listSign === LIST_SIGN.UNORDERED_ASTERISK) {
-    return LIST_SIGN.UNORDERED_ASTERISK;
+function getListSign(listSign: TLIST_SIGN, depth?: number) {
+  if (listSign === TLIST_SIGN.UNORDERED_ASTERISK) {
+    return TLIST_SIGN.UNORDERED_ASTERISK;
   }
 
-  if (listSign === LIST_SIGN.UNORDERED_PLUS) {
-    return LIST_SIGN.UNORDERED_PLUS;
+  if (listSign === TLIST_SIGN.UNORDERED_PLUS) {
+    return TLIST_SIGN.UNORDERED_PLUS;
   }
 
-  if (listSign === LIST_SIGN.ORDERED) {
-    return `${LIST_SIGN.ORDERED}.`;
+  if (listSign === TLIST_SIGN.ORDERED) {
+    return `${TLIST_SIGN.ORDERED}.`;
   }
 
-  if (listSign === LIST_SIGN.UNORDERED_TITLE) {
+  if (listSign === TLIST_SIGN.UNORDERED_TITLE) {
     return heading(depth ?? 2);
   }
 
@@ -42,7 +42,7 @@ function getListSign(listSign: LIST_SIGN, depth?: number) {
 export default function getMarkdown(
   diffs: AsyncReturnType<typeof getDiffsJson>,
   option: {
-    dependencies: DEPENDENCY[];
+    dependencies: TDEPENDENCY[];
     depth: TOptionWithAbsolutePath<IMarkdownOption>['depth'];
     titleListType: TOptionWithAbsolutePath<IMarkdownOption>['titleListType'];
     contentListType: TOptionWithAbsolutePath<IMarkdownOption>['contentListType'];

@@ -1,5 +1,5 @@
 import IBaseOption from '@configs/interfaces/IBaseOption';
-import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
+import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 import { Argv } from 'yargs';
 
 export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
@@ -54,35 +54,35 @@ export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
       description: 'list type of markdown document title',
       type: 'string',
       choices: [
-        LIST_SIGN.UNORDERED_TITLE,
-        LIST_SIGN.ORDERED,
-        LIST_SIGN.UNORDERED_ASTERISK,
-        LIST_SIGN.UNORDERED_MINUS,
-        LIST_SIGN.UNORDERED_PLUS,
+        TLIST_SIGN.UNORDERED_TITLE,
+        TLIST_SIGN.ORDERED,
+        TLIST_SIGN.UNORDERED_ASTERISK,
+        TLIST_SIGN.UNORDERED_MINUS,
+        TLIST_SIGN.UNORDERED_PLUS,
       ],
-      default: LIST_SIGN.UNORDERED_TITLE,
+      default: TLIST_SIGN.UNORDERED_TITLE,
     })
     .option('deps-list-type', {
       description: 'list type of markdown document dependency',
       type: 'string',
       choices: [
-        LIST_SIGN.ORDERED,
-        LIST_SIGN.UNORDERED_ASTERISK,
-        LIST_SIGN.UNORDERED_MINUS,
-        LIST_SIGN.UNORDERED_PLUS,
+        TLIST_SIGN.ORDERED,
+        TLIST_SIGN.UNORDERED_ASTERISK,
+        TLIST_SIGN.UNORDERED_MINUS,
+        TLIST_SIGN.UNORDERED_PLUS,
       ],
-      default: LIST_SIGN.UNORDERED_MINUS,
+      default: TLIST_SIGN.UNORDERED_MINUS,
     })
     .option('content-list-type', {
       description: 'list type of markdown document content',
       type: 'string',
       choices: [
-        LIST_SIGN.ORDERED,
-        LIST_SIGN.UNORDERED_ASTERISK,
-        LIST_SIGN.UNORDERED_MINUS,
-        LIST_SIGN.UNORDERED_PLUS,
+        TLIST_SIGN.ORDERED,
+        TLIST_SIGN.UNORDERED_ASTERISK,
+        TLIST_SIGN.UNORDERED_MINUS,
+        TLIST_SIGN.UNORDERED_PLUS,
       ],
-      default: LIST_SIGN.UNORDERED_MINUS,
+      default: TLIST_SIGN.UNORDERED_MINUS,
     })
     .option('git-basedir', {
       description: 'git base directory',

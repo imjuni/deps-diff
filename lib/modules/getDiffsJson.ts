@@ -1,8 +1,8 @@
-import { DEPENDENCY } from '@configs/interfaces/DEPENDENCY';
 import IBaseOption from '@configs/interfaces/IBaseOption';
 import IJsonOption from '@configs/interfaces/IJsonOption';
 import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
 import IPackageJson from '@configs/interfaces/IPackageJson';
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
 import TOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
 import getDiff from '@modules/getDiff';
 import getNextPackageJson from '@modules/getNextPackageJson';
@@ -55,7 +55,7 @@ export default async function getDiffsJson<T extends IJsonOption | IMarkdownOpti
     const packageJson = await getNextPackageJson({ option, git });
     const prevPackageJson = await getPrevPackageJson({ option, git });
 
-    const dependencies = option.dependencies.reduce<Record<DEPENDENCY, IDiff[]>>(
+    const dependencies = option.dependencies.reduce<Record<TDEPENDENCY, IDiff[]>>(
       (aggregation, dependency) => {
         const currentDependencies: Record<string, string> =
           packageJson.pass[dependencyMap[dependency]] ?? {};
@@ -71,9 +71,9 @@ export default async function getDiffsJson<T extends IJsonOption | IMarkdownOpti
         return { ...aggregation, [dependency]: diff };
       },
       {
-        [DEPENDENCY.DEV]: [],
-        [DEPENDENCY.PROD]: [],
-        [DEPENDENCY.PEER]: [],
+        [TDEPENDENCY.DEV]: [],
+        [TDEPENDENCY.PROD]: [],
+        [TDEPENDENCY.PEER]: [],
       },
     );
 
