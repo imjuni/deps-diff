@@ -6,5 +6,5 @@ export const LIST_SIGN = {
   ORDERED: '1',
 } as const;
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-redeclare
 export type LIST_SIGN = typeof LIST_SIGN[keyof typeof LIST_SIGN];

@@ -15,9 +15,8 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   testMatch: ['**/__tests__/*.(ts|tsx)', '**/__test__/*.(ts|tsx)'],
-  testPathIgnorePatterns: ['/node_modules/', 'example/', 'dist/', 'erdia_eg/'],
+  testPathIgnorePatterns: ['/node_modules/', 'example/', 'dist/', 'env.ts'],
   setupFilesAfterEnv: ['<rootDir>/.configs/jest.setup.js'],
-  testSequencer: '<rootDir>/.configs/test.spec.js',
 
   moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
     prefix: '<rootDir>/',

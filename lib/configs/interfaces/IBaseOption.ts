@@ -1,5 +1,6 @@
 import { DEPENDENCY } from '@configs/interfaces/DEPENDENCY';
 import { LIST_SIGN } from '@configs/interfaces/LIST_SIGN';
+import { TIGNORE_ACTION } from '@configs/interfaces/TIGNORE_ACTION';
 
 export default interface IBaseOption {
   /**
@@ -30,17 +31,7 @@ export default interface IBaseOption {
    * - peer-remove peerDependencies `remove` action ignore
    * - peer-change peerDependencies `change` action ignore
    */
-  ignore: (
-    | 'dev-add'
-    | 'dev-remove'
-    | 'dev-change'
-    | 'prod-add'
-    | 'prod-remove'
-    | 'prod-change'
-    | 'peer-add'
-    | 'peer-remove'
-    | 'peer-change'
-  )[];
+  ignore: TIGNORE_ACTION[];
 
   /**
    * configuration file path, if you not pass this option that will be use find '.depsrc' first

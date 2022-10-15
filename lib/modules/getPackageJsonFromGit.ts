@@ -3,18 +3,16 @@ import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
 import IPackageJson from '@configs/interfaces/IPackageJson';
 import IOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
 import getParseJson from '@modules/getParseJson';
+import { isError } from 'my-easy-fp';
+import { fail } from 'my-only-either';
 import path from 'path';
 import { SimpleGit } from 'simple-git';
 
 function getHashDir<T>(option: IOptionWithAbsolutePath<T>) {
-  if (option.absolute.gitBaseDir !== option.absolute.project) {
-    return path.posix.join(
-      path.relative(option.absolute.gitBaseDir, option.absolute.project),
-      option.absolute.packageJsonFileName,
-    );
-  }
-
-  return option.absolute.project;
+  return path.posix.join(
+    path.relative(option.absolute.gitBaseDir, option.absolute.project),
+    option.absolute.packageJsonFileName,
+  );
 }
 
 export default async function getPackageJsonFromGit<T extends IJsonOption | IMarkdownOption>({
@@ -26,9 +24,14 @@ export default async function getPackageJsonFromGit<T extends IJsonOption | IMar
   option: IOptionWithAbsolutePath<T>;
   hash: string;
 }): Promise<ReturnType<typeof getParseJson<IPackageJson>>> {
-  const prevPackageJson = getParseJson<IPackageJson>(
-    await git.show(`${hash}:${getHashDir(option)}`),
-  );
+  try {
+    const prevPackageJson = getParseJson<IPackageJson>(
+      await git.show(`${hash}:${getHashDir(option)}`),
+    );
 
-  return prevPackageJson;
+    return prevPackageJson;
+  } catch (catched) {
+    const err = isError(catched) ?? new Error('unknown error raised from `getPackageJsonFromGit`');
+    return fail(err);
+  }
 }

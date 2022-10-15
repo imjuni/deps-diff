@@ -6,6 +6,8 @@
   "include": [
     "**/*.ts",
     ".eslintrc.cjs",
+    "jest.config.cjs",
+    "jest.config.js",
     "prepublish.js"
   ],
   "exclude": [

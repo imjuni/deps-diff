@@ -13,6 +13,7 @@
     "unpub": "just --config ./.configs/just.config.ts unpub",
     "pub": "just --config ./.configs/just.config.ts pub",
     "pub:prod": "just --config ./.configs/just.config.ts pub:prod",
+    "test": "jest",
     "prepublishOnly": "node prepublish.js"
   },
   "repository": {
