@@ -39,6 +39,11 @@ export default interface IBaseOption {
   config?: string;
 
   /**
+   * display verbose message, if you enable verbose option that will be disable cli spinner
+   */
+  verbose: boolean;
+
+  /**
    * previous git commit hash for comparison
    */
   prevHash?: string;

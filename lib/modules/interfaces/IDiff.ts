@@ -1,5 +1,5 @@
 import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
-import { TACTION } from '@modules/interfaces/TACTION';
+import { TDIFF_TYPE } from '@modules/interfaces/TDIFF_TYPE';
 import { ReleaseType } from 'semver';
 
 export default interface IDiff {
@@ -9,7 +9,7 @@ export default interface IDiff {
    * - change change dependencies version
    * - remove remove dependencies
    * */
-  action: TACTION;
+  action: TDIFF_TYPE;
 
   /**
    * dependency from

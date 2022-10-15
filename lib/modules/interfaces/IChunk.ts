@@ -1,4 +1,6 @@
+import { TCHUNK_ACTION } from '@modules/interfaces/TCHUNK_ACTION';
+
 export default interface IChunk {
-  action: 'start' | 'end' | 'data';
+  action: TCHUNK_ACTION;
   data: string;
 }

@@ -2,18 +2,11 @@ import IJsonOption from '@configs/interfaces/IJsonOption';
 import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
 import IPackageJson from '@configs/interfaces/IPackageJson';
 import IOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
+import getHashDir from '@modules/getHashDir';
 import getParseJson from '@modules/getParseJson';
 import { isError } from 'my-easy-fp';
 import { fail } from 'my-only-either';
-import path from 'path';
 import { SimpleGit } from 'simple-git';
-
-function getHashDir<T>(option: IOptionWithAbsolutePath<T>) {
-  return path.posix.join(
-    path.relative(option.absolute.gitBaseDir, option.absolute.project),
-    option.absolute.packageJsonFileName,
-  );
-}
 
 export default async function getPackageJsonFromGit<T extends IJsonOption | IMarkdownOption>({
   git,

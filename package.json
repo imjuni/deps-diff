@@ -1,6 +1,6 @@
 {
   "name": "deps-diff",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Dependency difference create using by json or markdown format",
   "scripts": {
     "dev": "cross-env TS_NODE_PROJECT=tsconfig.json node -r ts-node/register ./lib/cli.ts",
@@ -13,7 +13,8 @@
     "unpub": "just --config ./.configs/just.config.ts unpub",
     "pub": "just --config ./.configs/just.config.ts pub",
     "pub:prod": "just --config ./.configs/just.config.ts pub:prod",
-    "test": "jest",
+    "test": "NODE_ENV=production jest",
+    "test:update": "cross-env NODE_ENV=develop DEBUG=ctix:* jest --runInBand --coverage --updateSnapshot",
     "prepublishOnly": "node prepublish.js"
   },
   "repository": {
@@ -67,7 +68,6 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.15.10",
     "eslint": "^8.24.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",

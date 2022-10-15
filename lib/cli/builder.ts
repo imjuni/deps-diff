@@ -1,4 +1,6 @@
 import IBaseOption from '@configs/interfaces/IBaseOption';
+import { TDEPENDENCY } from '@configs/interfaces/TDEPENDENCY';
+import { TIGNORE_ACTION } from '@configs/interfaces/TIGNORE_ACTION';
 import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 import { Argv } from 'yargs';
 
@@ -16,28 +18,34 @@ export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
       description: `configuration file path, if you not pass this option that will be use find '.depsrc' first`,
       type: 'string',
     })
+    .option('verbose', {
+      alias: 'v',
+      description: `display verbose message, if you enable verbose option that will be disable cli spinner`,
+      type: 'boolean',
+      default: false,
+    })
     .option('dependencies', {
       alias: 'd',
       description: `array of dependency type: dev, prod, peer`,
       type: 'string',
-      choices: ['dev', 'prod', 'peer'],
+      choices: [TDEPENDENCY.DEV, TDEPENDENCY.PROD, TDEPENDENCY.PEER],
       array: true,
-      default: ['prod'],
+      default: [TDEPENDENCY.PROD],
     })
     .option('ignore', {
       alias: 'i',
       description: 'ignore specfic dependency with action',
       type: 'string',
       choices: [
-        'dev-add',
-        'dev-remove',
-        'dev-change',
-        'prod-add',
-        'prod-remove',
-        'prod-change',
-        'peer-add',
-        'peer-remove',
-        'peer-change',
+        TIGNORE_ACTION.DEV_ADD,
+        TIGNORE_ACTION.DEV_REMOVE,
+        TIGNORE_ACTION.DEV_CHANGE,
+        TIGNORE_ACTION.PROD_ADD,
+        TIGNORE_ACTION.PROD_REMOVE,
+        TIGNORE_ACTION.PROD_CHANGE,
+        TIGNORE_ACTION.PEER_ADD,
+        TIGNORE_ACTION.PEER_REMOVE,
+        TIGNORE_ACTION.PEER_CHANGE,
       ],
       array: true,
       default: [],

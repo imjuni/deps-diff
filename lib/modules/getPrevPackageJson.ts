@@ -1,7 +1,10 @@
 import IJsonOption from '@configs/interfaces/IJsonOption';
 import IMarkdownOption from '@configs/interfaces/IMarkdownOption';
 import IOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath';
+import getHashDir from '@modules/getHashDir';
 import getPackageJsonFromGit from '@modules/getPackageJsonFromGit';
+import { TCHUNK_ACTION } from '@modules/interfaces/TCHUNK_ACTION';
+import Printable from '@modules/Printable';
 import { SimpleGit } from 'simple-git';
 
 export default async function getPrevPackageJson<T extends IJsonOption | IMarkdownOption>({
@@ -12,6 +15,11 @@ export default async function getPrevPackageJson<T extends IJsonOption | IMarkdo
   git: SimpleGit;
 }) {
   if (option.prevHash != null) {
+    Printable.out({
+      action: TCHUNK_ACTION.VERBOSE,
+      data: `Previous-with-hash: ${option.prevHash}:${getHashDir(option)}`,
+    });
+
     const prevPackageJson = await getPackageJsonFromGit({ option, git, hash: option.prevHash });
 
     if (prevPackageJson.type === 'fail') {
@@ -35,6 +43,11 @@ export default async function getPrevPackageJson<T extends IJsonOption | IMarkdo
     console.error(`Cannot found ${option.prevHash} commit`);
     process.exit(1);
   }
+
+  Printable.out({
+    action: TCHUNK_ACTION.VERBOSE,
+    data: `Previous-with-latest: ${gitlogs.latest.hash}:${getHashDir(option)}`,
+  });
 
   const prevPackageJson = await getPackageJsonFromGit({ option, git, hash: gitlogs.latest.hash });
 
