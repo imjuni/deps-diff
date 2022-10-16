@@ -4,10 +4,10 @@ import TOptionWithAbsolutePath from '@configs/interfaces/TOptionWithAbsolutePath
 import getParseJson from '@modules/getParseJson';
 import findUp from 'find-up';
 import fs from 'fs';
+import minimist from 'minimist';
 import { existsSync, getDirnameSync } from 'my-node-fp';
-import yargs from 'yargs';
 
-function getConfigFilePath(argv: { c?: string; config?: string; p?: string; project?: string }) {
+function getConfigFilePath(argv: minimist.ParsedArgs) {
   const argvConfigFilePath = argv.c ?? argv.config;
   const argvProjectFilePath = argv.p ?? argv.project;
   const projectDirPath =
@@ -24,7 +24,7 @@ function getConfigFilePath(argv: { c?: string; config?: string; p?: string; proj
 
 export default function preLoadConfig() {
   try {
-    const argv = yargs(process.argv.slice(2)).parseSync() as any;
+    const argv = minimist(process.argv.slice(2));
 
     const configFilePath = getConfigFilePath(argv);
 

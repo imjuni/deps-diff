@@ -4,7 +4,7 @@ import { TIGNORE_ACTION } from '@configs/interfaces/TIGNORE_ACTION';
 import { TLIST_SIGN } from '@configs/interfaces/TLIST_SIGN';
 import { Argv } from 'yargs';
 
-export default function builder(argv: Argv<IBaseOption>): Argv<IBaseOption> {
+export default function builder<T extends IBaseOption>(argv: Argv<T>): Argv<T> {
   argv
     .option('project', {
       alias: 'p',
