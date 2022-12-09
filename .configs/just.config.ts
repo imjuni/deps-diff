@@ -1,6 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-// import { readFileSync } from 'fs';
-// import { argv, logger, option, task } from 'just-scripts';
 import execa from 'execa';
 import { logger, option, series, task } from 'just-task';
 import readPackage from 'read-pkg';
@@ -28,7 +26,7 @@ task('clean', async () => {
 
 task('+rollup:dev', async () => {
   const cmd = 'rollup';
-  const option = '--config ./.configs/rollup.config.dev.ts --configPlugin ts';
+  const option = '--config ./.configs/rollup.config.dev.ts --configPlugin typescript';
 
   await execa(cmd, splitArgs(option), {
     env: {
@@ -41,7 +39,7 @@ task('+rollup:dev', async () => {
 
 task('+rollup:prod', async () => {
   const cmd = 'rollup';
-  const option = '--config ./.configs/rollup.config.prod.ts --configPlugin ts';
+  const option = '--config ./.configs/rollup.config.prod.ts --configPlugin typescript';
 
   await execa(cmd, splitArgs(option), {
     env: {

@@ -1,6 +1,6 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import ts from '@rollup/plugin-typescript';
 import readPackage from 'read-pkg';
-import ts from 'rollup-plugin-ts';
 
 const pkg = readPackage.sync();
 
