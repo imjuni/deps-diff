@@ -22,7 +22,7 @@
     /* Basic Options */
     "lib": ["es2021", "DOM"],
     "declaration": true /* Generates corresponding '.d.ts' file. */,
-    // "declarationDir": "./dist/typings",
+    "declarationDir": "./dist/typings",
     "declarationMap": true /* Generates corresponding '.d.ts' file. */,
     "sourceMap": true /* Generates corresponding '.map' file. */,
     "outDir": "./dist" /* Redirect output structure to the directory. */,
