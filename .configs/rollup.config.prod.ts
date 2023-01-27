@@ -1,6 +1,7 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import readPackage from 'read-pkg';
 import ts from 'rollup-plugin-ts';
+import terser from '@rollup/plugin-terser';
 
 const pkg = readPackage.sync();
 
@@ -22,7 +23,7 @@ export default [
         banner: '#!/usr/bin/env node',
       },
     ],
-    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' }), terser()],
   },
   {
     input: 'lib/pipe-md.ts',
@@ -33,7 +34,7 @@ export default [
         banner: '#!/usr/bin/env node',
       },
     ],
-    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' }), terser()],
   },
   {
     input: 'lib/cjs.ts',
