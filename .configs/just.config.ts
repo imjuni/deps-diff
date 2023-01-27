@@ -26,7 +26,7 @@ task('clean', async () => {
 
 task('+rollup:dev', async () => {
   const cmd = 'rollup';
-  const option = '--config ./.configs/rollup.config.dev.ts --configPlugin typescript';
+  const option = '--config ./.configs/rollup.config.dev.ts --configPlugin ts';
 
   await execa(cmd, splitArgs(option), {
     env: {
@@ -39,12 +39,22 @@ task('+rollup:dev', async () => {
 
 task('+rollup:prod', async () => {
   const cmd = 'rollup';
-  const option = '--config ./.configs/rollup.config.prod.ts --configPlugin typescript';
+  const option = '--config ./.configs/rollup.config.prod.ts --configPlugin ts';
 
   await execa(cmd, splitArgs(option), {
     env: {
       NODE_ENV: 'production',
     },
+    stderr: process.stderr,
+    stdout: process.stdout,
+  });
+});
+
+task('lint', async () => {
+  const cmd = 'eslint';
+  const option = '--cache .';
+
+  await execa(cmd, splitArgs(option), {
     stderr: process.stderr,
     stdout: process.stdout,
   });

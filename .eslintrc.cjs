@@ -9,10 +9,11 @@ module.exports = {
     'airbnb-base',
     'airbnb-typescript/base',
     'plugin:prettier/recommended',
+    'prettier',
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
-  ignorePatterns: ['__test__/*', '__tests__/*'],
+  ignorePatterns: ['__test__/*', '__tests__/*', 'dist/*'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.eslint.json',

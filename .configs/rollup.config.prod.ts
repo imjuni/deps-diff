@@ -1,10 +1,10 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import ts from '@rollup/plugin-typescript';
 import readPackage from 'read-pkg';
+import ts from 'rollup-plugin-ts';
 
 const pkg = readPackage.sync();
 
-function resolveOnly(module) {
+function resolveOnly(module: string) {
   return (
     pkg?.dependencies?.[module] == null &&
     pkg?.devDependencies?.[module] == null &&
@@ -20,13 +20,9 @@ export default [
         format: 'cjs',
         file: 'dist/cli.js',
         banner: '#!/usr/bin/env node',
-        sourcemap: true,
       },
     ],
-    plugins: [
-      nodeResolve({ resolveOnly }),
-      ts({ tsconfig: 'tsconfig.prod.json', compilerOptions: { declarationDir: 'typings' } }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
   {
     input: 'lib/pipe-md.ts',
@@ -35,13 +31,9 @@ export default [
         format: 'cjs',
         file: 'dist/pipe-md.js',
         banner: '#!/usr/bin/env node',
-        sourcemap: true,
       },
     ],
-    plugins: [
-      nodeResolve({ resolveOnly }),
-      ts({ tsconfig: 'tsconfig.prod.json', compilerOptions: { declarationDir: 'typings' } }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
   {
     input: 'lib/cjs.ts',
@@ -49,17 +41,12 @@ export default [
       {
         format: 'cjs',
         file: 'dist/cjs/index.cjs',
-        sourcemap: true,
       },
       {
         format: 'esm',
         file: 'dist/esm/index.mjs',
-        sourcemap: true,
       },
     ],
-    plugins: [
-      nodeResolve({ resolveOnly }),
-      ts({ tsconfig: 'tsconfig.prod.json', compilerOptions: { declarationDir: 'typings' } }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
 ];

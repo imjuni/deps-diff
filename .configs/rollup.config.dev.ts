@@ -1,8 +1,16 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import ts from '@rollup/plugin-typescript';
 import readPackage from 'read-pkg';
+import ts from 'rollup-plugin-ts';
 
 const pkg = readPackage.sync();
+
+function resolveOnly(module: string) {
+  return (
+    pkg?.dependencies?.[module] == null &&
+    pkg?.devDependencies?.[module] == null &&
+    pkg.peerDependencies?.[module] == null
+  );
+}
 
 export default [
   {
@@ -14,14 +22,7 @@ export default [
         banner: '#!/usr/bin/env node',
       },
     ],
-    plugins: [
-      nodeResolve({
-        resolveOnly: (module) => {
-          return pkg?.dependencies?.[module] == null && pkg?.devDependencies?.[module] == null;
-        },
-      }),
-      ts({ tsconfig: 'tsconfig.json' }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
   {
     input: 'lib/pipe-md.ts',
@@ -32,14 +33,7 @@ export default [
         banner: '#!/usr/bin/env node',
       },
     ],
-    plugins: [
-      nodeResolve({
-        resolveOnly: (module) => {
-          return pkg?.dependencies?.[module] == null && pkg?.devDependencies?.[module] == null;
-        },
-      }),
-      ts({ tsconfig: 'tsconfig.json' }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
   {
     input: 'lib/pipe-md.ts',
@@ -53,13 +47,6 @@ export default [
         file: 'dist/pipe-md.mjs',
       },
     ],
-    plugins: [
-      nodeResolve({
-        resolveOnly: (module) => {
-          return pkg?.dependencies?.[module] == null && pkg?.devDependencies?.[module] == null;
-        },
-      }),
-      ts({ tsconfig: 'tsconfig.json' }),
-    ],
+    plugins: [nodeResolve({ resolveOnly }), ts({ tsconfig: 'tsconfig.prod.json' })],
   },
 ];
